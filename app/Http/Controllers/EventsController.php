@@ -100,7 +100,26 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Event::find($id);
+
+        $time_start = \Carbon\Carbon::parse($request->time_start);
+        $time_end = \Carbon\Carbon::parse($request->time_end);
+        $alarm = \Carbon\Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
+
+        $event->name = $request->name;
+        $event->time_start =  $time_start ;
+        $event->time_end =  $time_end;
+        $event->alarm = $alarm;
+        $event->details = $request->details;
+        $event->user_id = $request->user_id;
+        $event->save();
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Event updated.',
+            'event' => $event
+        ]);
+
     }
 
     /**
