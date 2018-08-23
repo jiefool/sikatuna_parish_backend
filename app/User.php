@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'name', 'username', 'email', 'password', 'type'
     ];
 
     /**
@@ -28,4 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function events()
+    {
+        return $this->hasMany('App\Event');
+    }
 }

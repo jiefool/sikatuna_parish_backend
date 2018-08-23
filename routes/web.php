@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/getToken', 'HomeController@getToken')->name('get-token');
 
 Route::get('/user/{username}', 'UsersController@getUserDetails')->name('get-user-details');
+
+Route::post('/events/store', 'EventsController@store')->name('events-store');
