@@ -19,7 +19,13 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'List of events.',
+            'events' =>  $events
+        ]);
     }
 
     /**
@@ -41,8 +47,6 @@ class EventsController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request);
-
         $time_start = \Carbon\Carbon::parse($request->time_start);
         $time_end = \Carbon\Carbon::parse($request->time_end);
         $alarm = \Carbon\Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
@@ -54,6 +58,7 @@ class EventsController extends Controller
         $event->alarm = $alarm;
         $event->details = $request->details;
         $event->user_id = $request->user_id;
+        $event->is_confirmed = false;
         $event->save();
 
         return response()->json([
@@ -104,8 +109,36 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $event = Event::find($id);
+
+        if($event){
+            $event->delete();
+        }
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'Event deleted.'
+        ]);
     }
+
+    public function confirmEvent($id){
+        $event = Event::find($eventId);
+        $status = 'ko';
+        $message = 'Event can\'t be confirmed';
+
+        if($event){
+            $event->is_confirmed = true;
+            $status = 'ok';
+            $message = 'Event confirmed';
+        }
+
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+            'event' => $event;
+        ]);
+    }
+
+    
 }
