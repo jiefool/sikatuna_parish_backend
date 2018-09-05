@@ -4,22 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use Carbon\Carbon;
 
 class EventsController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth:api');
-    }
-
-
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        // $this->middleware('auth:api');
+    }
+
     public function index()
     {
-        $events = Event::all();
+        $events = Event::with('user')->get();
 
         return response()->json([
             'status' => 'ok',
@@ -47,9 +49,9 @@ class EventsController extends Controller
     public function store(Request $request)
     {
 
-        $time_start = \Carbon\Carbon::parse($request->time_start);
-        $time_end = \Carbon\Carbon::parse($request->time_end);
-        $alarm = \Carbon\Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
+        $time_start = Carbon::parse($request->time_start);
+        $time_end = Carbon::parse($request->time_end);
+        $alarm = Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
 
         $event = new Event();
         $event->name = $request->name;
@@ -102,9 +104,9 @@ class EventsController extends Controller
     {
         $event = Event::find($id);
 
-        $time_start = \Carbon\Carbon::parse($request->time_start);
-        $time_end = \Carbon\Carbon::parse($request->time_end);
-        $alarm = \Carbon\Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
+        $time_start = Carbon::parse($request->time_start);
+        $time_end = Carbon::parse($request->time_end);
+        $alarm = Carbon::parse($request->time_start)->subMinutes((int)$request->alarm);
 
         $event->name = $request->name;
         $event->time_start =  $time_start ;
@@ -155,7 +157,18 @@ class EventsController extends Controller
         return response()->json([
             'status' => $status,
             'message' => $message,
-            'event' => $event;
+            'event' => $event
+        ]);
+    }
+
+    public function getEventsFromDate(Request $request){
+        $event_date = Carbon::parse($request->event_date);
+
+        $events = Event::with('user')->whereDate('time_start', '=', $event_date)->get();
+
+        return response()->json([
+            'status' => 'ok',
+            'events' => $events
         ]);
     }
 

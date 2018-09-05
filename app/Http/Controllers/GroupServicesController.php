@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Group;
+use App\GroupService;
+use Carbon\Carbon;
 
-class GroupsController extends Controller
+class GroupServicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,15 +36,16 @@ class GroupsController extends Controller
      */
     public function store(Request $request)
     {
-        $group = new Group();
-        $group->name = $request->name;
-        $group->leader = $request->leader;
-        $group->contact_number = $request->contact_number;
-        $group->save();
+        $groupService = new GroupService();
+
+        $groupService->time_start =  Carbon::parse($request->time_start);
+        $groupService->time_end = Carbon::parse($request->time_end);
+        $groupService->group_id = $request->group_id;
+        $groupService->save();
 
         return response()->json([
             'status' => 'ok',
-            'message' => 'Group save.'
+            'message' => 'Service saved.'
         ]);
     }
 
@@ -55,11 +57,7 @@ class GroupsController extends Controller
      */
     public function show($id)
     {
-        $group = Group::with('services')->find($id);
-
-        return response()->json([
-            'group' => $group
-        ]);
+        //
     }
 
     /**
@@ -82,20 +80,7 @@ class GroupsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $group = Group::find($id);
-
-        if($group){
-            $group->name = $request->name;
-            $group->leader = $request->leader;
-            $group->contact_number = $request->contact_number;
-            $group->save();
-        }
-        
-        return response()->json([
-            'status' => 'ok',
-            'message' => 'Group updated.'
-        ]);
-
+        //
     }
 
     /**
@@ -106,15 +91,15 @@ class GroupsController extends Controller
      */
     public function destroy($id)
     {
-        $group = Group::find($id);
+        $groupService = GroupService::find($id);
 
-        if($group){
-            $group->delete();
+        if($groupService){
+            $groupService->delete();
         }
 
         return response()->json([
             'status' => 'ok',
-            'message' => 'Group deleted.'
+            'message' => 'Service deleted.'
         ]);
     }
 }

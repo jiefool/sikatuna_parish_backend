@@ -12,7 +12,7 @@ class UsersController extends Controller
     }
 
     public function getUserDetails(Request $request){
-      $user = User::where('username', $request->username)->first();
+      $user = User::where('email', $request->email)->first();
 
       return response()->json($user);
     }
@@ -26,5 +26,10 @@ class UsersController extends Controller
         }
 
         return response()->json($events);
+    }
+
+    public function getPriestUsers(Request $request){
+        $users = User::where('type', '=', $request->type)->get();
+        return response()->json($users);
     }
 }
