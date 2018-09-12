@@ -14,7 +14,9 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Group::all();
+
+        return response()->json($groups);
     }
 
     /**
