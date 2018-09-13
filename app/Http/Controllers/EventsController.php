@@ -145,7 +145,7 @@ class EventsController extends Controller
     }
 
     public function confirmEvent($id){
-        $event = Event::find($eventId);
+        $event = Event::find($id);
         $status = 'ko';
         $message = 'Event can\'t be confirmed';
 
