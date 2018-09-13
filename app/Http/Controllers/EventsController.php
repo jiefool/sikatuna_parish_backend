@@ -185,7 +185,11 @@ class EventsController extends Controller
             }
         }
 
-        return response()->json($events);
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'List of events.',
+            'events' =>  $events
+        ]);
 
     }
 
