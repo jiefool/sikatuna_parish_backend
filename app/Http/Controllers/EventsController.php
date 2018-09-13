@@ -151,6 +151,7 @@ class EventsController extends Controller
 
         if($event){
             $event->is_confirmed = true;
+            $event->save();
             $status = 'ok';
             $message = 'Event confirmed';
         }
