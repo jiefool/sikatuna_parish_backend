@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use Carbon\Carbon;
+use App\User;
 
 class EventsController extends Controller
 {
@@ -170,6 +171,22 @@ class EventsController extends Controller
             'status' => 'ok',
             'events' => $events
         ]);
+    }
+
+    public function userEvents(Request $request, $user_id){
+        $user = User::find($user_id);
+        $events = Event::with('user')->get();
+
+        if ($user){
+            if ($user->type != 'secretary'){
+                $events = Event::with('user')->where('user_id', '=', $user_id)->get();
+            }else{
+                $events = Event::with('user')->get();
+            }
+        }
+
+        return response()->json($events);
+
     }
 
     
