@@ -24,6 +24,7 @@ Route::get('/home/getToken', 'HomeController@getToken')->name('get-token');
 Route::get('/user/{email}/data', 'UsersController@getUserDetails')->name('user.email.data');
 Route::get('/users/{type}', 'UsersController@getPriestUsers')->name('users.priest');
 Route::get('/user/{id}/events/unconfirm', 'UsersController@unconfirmedEvents')->name('user.id.events.unconfirmed');
+Route::post('/user/{id}/update', 'UsersController@update')->name('user.id.update_settings');
 
 Route::get('/events', 'EventsController@index')->name('events');
 Route::get('/{user_id}/events', 'EventsController@userEvents')->name('user-events');
