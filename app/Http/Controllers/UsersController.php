@@ -70,7 +70,7 @@ class UsersController extends Controller
 
 
         if (count($validator->errors()) > 0){
-            return response()->json($validator->errors());
+            return response()->json(array('error'=>$validator->errors()->first()));
         }else{
             
             $user->name = $request->name;

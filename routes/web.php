@@ -40,6 +40,8 @@ Route::get('/groups/{id}/show', 'GroupsController@show')->name('groups.id.show')
 Route::post('/groups/{id}/destroy', 'GroupsController@destroy')->name('groups.id.destroy');
 Route::post('/groups/store', 'GroupsController@store')->name('groups.store');
 Route::post('/groups/{id}/update', 'GroupsController@update')->name('groups.id.update');
+Route::post('/groups/{id}/delete', 'GroupsController@destroy')->name('groups.id.delete');
+
 
 Route::post('/group-services/store', 'GroupServicesController@store')->name('groups-services.store');
 Route::post('/group-services/{id}/destroy', 'GroupServicesController@destroy')->name('groups-services.id.destroy');
