@@ -63,8 +63,8 @@
 
                             <div class="col-md-6">
                                 <select id="type" type="text" class="form-control" name="type" required>
-                                    <option value="secretary" @if(Auth::user()->type) selected="selected" @endif >Secretary</option>
-                                    <option value="priest" @if(Auth::user()->type) selected="selected" @endif>Priest</option>
+                                    <option value="secretary" @if(Auth::user()->type == 'secretary') selected="selected" @endif >Secretary</option>
+                                    <option value="priest" @if(Auth::user()->type == 'priest') selected="selected" @endif>Priest</option>
                                 </select>
 
                                 @if ($errors->has('type'))

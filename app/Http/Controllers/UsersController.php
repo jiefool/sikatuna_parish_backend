@@ -76,6 +76,7 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->username = $request->username;
             $user->email = $request->email;
+            $user->type = $request->type;
 
             if(!$hasher->check($request->password, $user->password)){
                 $user->password = bcrypt($request->password);
@@ -135,6 +136,7 @@ class UsersController extends Controller
         $user->username = $request->username;
         $user->photo = $input['imagename'];
         $user->email = $request->email;
+        $user->type = $request->type;
         if(!empty($user->password)){
             if ($user->password != bcrypt($request->password)){
                 $user->password = bcrypt($request->password);
