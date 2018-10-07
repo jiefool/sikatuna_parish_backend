@@ -62,6 +62,20 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .position-ref:before{
+
+               
+            }
+
+            .position-ref{
+               /* opacity: .4; */
+                background-color:rgba(0, 0, 0, 0.5);
+                background-image: url("{{url('/images/church.jpg')}}");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+            }            
+
         </style>
     </head>
     <body>
@@ -77,6 +91,7 @@
                 </div>
             @endif
 
+            <!--
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
@@ -90,6 +105,7 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
+            -->
         </div>
     </body>
 </html>
