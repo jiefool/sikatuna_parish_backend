@@ -63,6 +63,9 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('users.id.edit', array('id'=>Auth::user()->id)) }}">Edit</a>
+                                    </li>
                                 </ul>
                             </li>
                         @endguest

@@ -23,6 +23,8 @@ Route::get('/home/getToken', 'HomeController@getToken')->name('get-token');
 
 Route::get('/user/{email}/data', 'UsersController@getUserDetails')->name('user.email.data');
 Route::get('/users/{type}', 'UsersController@getPriestUsers')->name('users.priest');
+Route::get('/users/{id}/edit', 'UsersController@edit')->name('users.id.edit');
+Route::post('/users/{id}/update', 'UsersController@updateWeb')->name('users.id.update');
 Route::get('/user/{id}/events/unconfirm', 'UsersController@unconfirmedEvents')->name('user.id.events.unconfirmed');
 Route::post('/user/{id}/update', 'UsersController@update')->name('user.id.update_settings');
 

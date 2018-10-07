@@ -10,7 +10,7 @@ use Illuminate\Hashing\BcryptHasher as Hash;
 class UsersController extends Controller
 {
     public function __construct(){
-      $this->middleware('auth:api');
+      // $this->middleware('auth:api');
     }
 
     public function getUserDetails(Request $request){
@@ -76,6 +76,7 @@ class UsersController extends Controller
             $user->name = $request->name;
             $user->username = $request->username;
             $user->email = $request->email;
+            $user->type = $request->type;
 
             if(!$hasher->check($request->password, $user->password)){
                 $user->password = bcrypt($request->password);
@@ -85,20 +86,65 @@ class UsersController extends Controller
 
             return response()->json($user);
         }
-
-       
-
         
+    }
 
-       
+    public function edit($id){
+        $user = User::find($id);
 
-       
-        
+        return view('users.edit', $user);
+    }
 
-        // $user->save();
+    public function updateWeb(Request $request, $id){
+        $user = User::find($id);
 
-        // return response()->json($user);
+        $rules = array(
+            'photo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        );
 
-        
+        if ($user->name != $request->name){
+            $rules['name'] = 'required|string|max:255';
+        }
+
+        if ($user->username != $request->username){
+            $rules['username'] = 'required|string|max:255|unique:users';
+        }
+
+        if ($user->type != $request->type){
+            $rules['type'] = 'required|string|max:255';
+        }
+
+        if ($user->email != $request->email){
+            $rules['email'] = 'required|string|email|max:255|unique:users';
+        }
+
+        if(!empty($user->password)){
+            if ($user->password != bcrypt($request->password)){
+                $rules['password'] = 'required|string|min:6|confirmed';
+            }
+        }
+
+        $request->validate($rules);
+
+        $image = $request->photo;
+        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $input['imagename']);
+
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->photo = $input['imagename'];
+        $user->email = $request->email;
+        $user->type = $request->type;
+        if(!empty($user->password)){
+            if ($user->password != bcrypt($request->password)){
+                $user->password = bcrypt($request->password);
+            }
+        }
+        $user->save();
+
+        return redirect()->route('users.id.edit', array('id'=>$id));
+
     }
 }
