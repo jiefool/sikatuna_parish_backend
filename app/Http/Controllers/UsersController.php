@@ -41,15 +41,15 @@ class UsersController extends Controller
 
         $fields = array();
 
-        if ($user->name != $request->name){
+        if($request->name != '' && $user->name != $request->name)
             $fields['name'] = 'required|string|max:255';
         }
 
-        if ($user->username != $request->username){
+        if ($request->username != '' && $user->username != $request->username){
             $fields['username'] = 'required|string|max:255|unique:users';
         }
 
-        if ($user->email != $request->email){
+        if ($request->email != '' && $user->email != $request->email){
             $fields['email'] = 'required|string|email|max:255|unique:users';
         }   
 
@@ -73,10 +73,17 @@ class UsersController extends Controller
             return response()->json(array('error'=>$validator->errors()->first()));
         }else{
             
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->type = $request->type;
+            if ($request->name != ''){
+                $user->name = $request->name;
+            }
+
+            if($request->username != ''){
+                $user->username = $request->username;
+            }
+
+            if($request->email != ''){
+                $user->email = $request->email;
+            }
 
             if(!$hasher->check($request->password, $user->password)){
                 $user->password = bcrypt($request->password);
