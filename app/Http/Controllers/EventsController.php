@@ -61,7 +61,13 @@ class EventsController extends Controller
         $event->alarm = $alarm;
         $event->details = $request->details;
         $event->user_id = $request->user_id;
-        $event->is_confirmed = false;
+
+        if($request->is_confirmed == "true"){
+            $event->is_confirmed = true;
+        } else {
+            $event->is_confirmed = false;
+        }
+
         $event->save();
 
         return response()->json([
