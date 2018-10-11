@@ -41,7 +41,7 @@ class UsersController extends Controller
 
         $fields = array();
 
-        if($request->name != '' && $user->name != $request->name)
+        if($request->name != '' && $user->name != $request->name){
             $fields['name'] = 'required|string|max:255';
         }
 
