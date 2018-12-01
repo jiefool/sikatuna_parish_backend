@@ -200,5 +200,19 @@ class EventsController extends Controller
 
     }
 
+    public function statusUpdate(Request $request, $id){
+        if(!empty($request->status)){
+            $event = Event::find($id);
+            $event->status = $request->status;
+
+            return response()->json([
+                'status' => 'ok',
+                'message' => 'Event status updated.',
+                'event' => $event
+            ]);
+        }
+
+    }
+
     
 }

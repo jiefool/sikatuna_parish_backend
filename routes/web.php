@@ -32,6 +32,7 @@ Route::get('/events', 'EventsController@index')->name('events');
 Route::get('/{user_id}/events', 'EventsController@userEvents')->name('user-events');
 
 Route::get('/events/{id}/confirm', 'EventsController@confirmEvent')->name('events.id.confirm');
+Route::post('/events/{id}/status-update', 'EventsController@statusUpdate')->name('events.id.status-update');
 Route::get('/events/{event_date}', 'EventsController@getEventsFromDate')->name('events.date');
 Route::post('/events/{id}/destroy', 'EventsController@destroy')->name('events.id.destroy');
 Route::post('/events/store', 'EventsController@store')->name('events.store');
