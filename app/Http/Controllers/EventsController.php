@@ -204,6 +204,7 @@ class EventsController extends Controller
         if(!empty($request->status)){
             $event = Event::find($id);
             $event->status = $request->status;
+            $event->save();
 
             return response()->json([
                 'status' => 'ok',
