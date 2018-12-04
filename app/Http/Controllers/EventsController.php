@@ -62,6 +62,13 @@ class EventsController extends Controller
         $event->details = $request->details;
         $event->user_id = $request->user_id;
 
+        if(!empty($request->status)){
+            $event->status = $request->status;    
+        }else{
+            $event->status = "pending";
+        }
+        
+
         if($request->is_confirmed == "true"){
             $event->is_confirmed = true;
         } else {
